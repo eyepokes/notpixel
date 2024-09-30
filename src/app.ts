@@ -11,35 +11,47 @@ import { Telegraf } from "telegraf";
         ""
     ];
 
+    const proxies = [
+        "" //format: protocol://username:password@host:port
+    ];
+
     const applyBoosts = false; // true - boost account, false - not
+    const useProxy = false; // true - use proxy for every account, false - not
 
     let jobs = [];
+    let i = 0;
     for (const token of tokens) {
-        jobs.push(job(token));
+        if(useProxy) {
+            jobs.push(job(token, proxies[i]));
+        }
+        else {
+            jobs.push(job(token));
+        }
+        i++
     }
 
     Promise.allSettled(jobs);
 
-    async function job(token: string) {
+    async function job(token: string, proxy: string | false = false) {
         try {
             console.log(`job() :: loading user data`);
-            let userData = await usersMe(token);
+            let userData = await usersMe(token, proxy);
 
 
             while(true) {
                 console.log(`job() :: loading mining status`);
-                let miningData = await miningStatus(token);
+                let miningData = await miningStatus(token, proxy);
                 for(let i = 1; i <= miningData.charges; i ++) {
-                    await repaintStart(token, generateRandomNumber(1, 1000000), getRandomColor());
+                    await repaintStart(token, proxy, generateRandomNumber(1, 1000000), getRandomColor());
                     await sleep(generateRandomNumber(1,5));
                 }
-                await miningClaim(token);
+                await miningClaim(token, proxy);
                 if(applyBoosts) {
-                    await miningBoostCheckPaintReward(token);
+                    await miningBoostCheckPaintReward(token, proxy);
                     await sleep(1);
-                    await miningBoostCheckReChargeSpeed(token);
+                    await miningBoostCheckReChargeSpeed(token, proxy);
                     await sleep(1);
-                    await miningBoostCheckEnergyLimit(token);
+                    await miningBoostCheckEnergyLimit(token, proxy);
                 }
                 await sleep(60);
             }

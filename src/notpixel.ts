@@ -11,11 +11,11 @@ const headers = {
 
 const rootEndpoint = "https://notpx.app/api/v1";
 
-export async function usersMe(token: string) {
+export async function usersMe(token: string, proxy: string | false = false) {
     let response = await request("GET", `${rootEndpoint}/users/me`, {
         ...headers,
         "authorization": `${token}`
-    }, false);
+    }, proxy);
 
     if(response.status === 401) {
         throw new Error("update token");
@@ -24,11 +24,11 @@ export async function usersMe(token: string) {
     return response.data;
 }
 
-export async function miningStatus(token: string) {
+export async function miningStatus(token: string, proxy: string | false = false) {
     let response = await request("GET", `${rootEndpoint}/mining/status`, {
         ...headers,
         "authorization": `${token}`
-    }, false);
+    }, proxy);
 
     if(response.status === 401) {
         throw new Error("update token");
@@ -37,11 +37,11 @@ export async function miningStatus(token: string) {
     return response.data;
 }
 
-export async function buyList(token: string) {
+export async function buyList(token: string, proxy: string | false = false) {
     let response = await request("GET", `${rootEndpoint}/buy/list`, {
         ...headers,
         "authorization": `${token}`
-    }, false);
+    }, proxy);
 
     if(response.status === 401) {
         throw new Error("update token");
@@ -50,11 +50,11 @@ export async function buyList(token: string) {
     return response.data;
 }
 
-export async function miningClaim(token: string) {
+export async function miningClaim(token: string, proxy: string | false = false) {
     let response = await request("GET", `${rootEndpoint}/mining/claim`, {
         ...headers,
         "authorization": `${token}`
-    }, false);
+    }, proxy);
 
     if(response.status === 401) {
         throw new Error("update token");
@@ -63,11 +63,11 @@ export async function miningClaim(token: string) {
     return response.data;
 }
 
-export async function repaintStart(token: string, pixelId: number, newColor: string) {
+export async function repaintStart(token: string, proxy: string | false = false, pixelId: number, newColor: string) {
     let response = await request("POST", `${rootEndpoint}/repaint/start`, {
         ...headers,
         "authorization": `${token}`
-    }, false, JSON.stringify({pixelId, newColor}));
+    }, proxy, JSON.stringify({pixelId, newColor}));
 
     if(response.status === 401) {
         throw new Error("update token");
@@ -76,11 +76,11 @@ export async function repaintStart(token: string, pixelId: number, newColor: str
     return response.data;
 }
 
-export async function miningBoostCheckPaintReward(token: string) {
+export async function miningBoostCheckPaintReward(token: string, proxy: string | false = false) {
     let response = await request("GET", `${rootEndpoint}/mining/boost/check/paintReward`, {
         ...headers,
         "authorization": `${token}`
-    }, false);
+    }, proxy);
 
     if(response.status === 401) {
         throw new Error("update token");
@@ -89,11 +89,11 @@ export async function miningBoostCheckPaintReward(token: string) {
     return response.data;
 }
 
-export async function miningBoostCheckReChargeSpeed(token: string) {
+export async function miningBoostCheckReChargeSpeed(token: string, proxy: string | false = false) {
     let response = await request("GET", `${rootEndpoint}/mining/boost/check/reChargeSpeed`, {
         ...headers,
         "authorization": `${token}`
-    }, false);
+    }, proxy);
 
     if(response.status === 401) {
         throw new Error("update token");
@@ -102,11 +102,11 @@ export async function miningBoostCheckReChargeSpeed(token: string) {
     return response.data;
 }
 
-export async function miningBoostCheckEnergyLimit(token: string) {
+export async function miningBoostCheckEnergyLimit(token: string, proxy: string | false = false) {
     let response = await request("GET", `${rootEndpoint}/mining/boost/check/energyLimit`, {
         ...headers,
         "authorization": `${token}`
-    }, false);
+    }, proxy);
 
     if(response.status === 401) {
         throw new Error("update token");
